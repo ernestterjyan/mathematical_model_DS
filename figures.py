@@ -5,7 +5,7 @@ This script creates the following files inside a local `Figures/` folder:
 
     * LogisticIllustration.pdf   – SI model logistic growth
     * DecayIllustration.pdf     – IR model exponential decay
-    * SI_SIS_Timeseries.pdf     – comparison of SI vs SIS models
+    * Timeseries.pdf            – comparison of SI vs SIS models
     * PhasePlane_R0_0.8.pdf     – SIR phase‑plane portrait for R₀=0.8
     * PhasePlane_R0_2.0.pdf     – SIR phase‑plane portrait for R₀=2.0
     * FinalSizeSketch.pdf       – Kermack–McKendrick final‑size implicit curve
@@ -19,7 +19,7 @@ Dependencies
 
 Usage
 -----
-$ python generate_week2_figures.py
+$ python figures.py
 
 All output is written as vector PDF so the graphics stay crisp when
 included in LaTeX.
@@ -112,7 +112,7 @@ def make_si_sis_timeseries():
     ax.set_ylabel('Infectious proportion $i(t)$')
     ax.legend()
     fig.tight_layout()
-    fig.savefig(OUTPUT_DIR / 'SI_SIS_Timeseries.pdf', bbox_inches='tight')
+    fig.savefig(OUTPUT_DIR / 'Timeseries.pdf', bbox_inches='tight')
     plt.close(fig)
 
 # ----------------------------------------------------------------------------
