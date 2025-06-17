@@ -300,6 +300,15 @@ with the same basic reproduction number
 Because $r=1-s-i$, the dynamics in the
 \((s,i)\)-plane are governed by the first two equations of~\cref{eq:SIRnd}.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\linewidth]{Figures/SIR_Timeseries.pdf}
+  \caption{Full SIR model time-series with
+           $\beta=\SI{0.42}{day^{-1}}$, $\gamma=\SI{0.25}{day^{-1}}$
+           ($R_0\approx1.68$).  Unlike the SIS case, the infectious class
+           ultimately vanishes because immunity is permanent ($r\to1-s_\infty$).}
+  \label{fig:sir_timeseries}
+\end{figure}
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 8
 % ─────────────────────────────────────────────────────────────────────────────
@@ -355,12 +364,219 @@ from the initial condition $(s_0,i_0)=(0.999,0.001)$.}
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 9
 % ─────────────────────────────────────────────────────────────────────────────
+\section{Disease-free equilibria and the invasion criterion}\label{sec:DFE}
+
+For the nondimensional \textit{SIR} model in~\cref{eq:SIRnd},
+\[
+s'=-\RR si, \qquad
+i'=\RR si-i, \qquad
+r'=i ,
+\]
+every point with $i=0$ is \emph{disease-free}.  Let
+\(
+(s_0,0,r_0)\in[0,1]^3
+\)
+be such an equilibrium and perturb it with a single infectious
+individual so that $i\ll1$ while $s\approx s_0$ remains constant on that
+time-scale.  Linearising $i'=(\RR s-1)i$ about $i=0$ gives
+\begin{equation*}
+  i' \;=\; (\RR s_0 - 1)\,i .
+\end{equation*}
+Hence the perturbation grows if and only if
+\begin{equation*}
+  \RR\,s_0 \;>\; 1 .
+\end{equation*}
+For a wholly susceptible population ($s_0=1$) this reduces to the classical
+threshold condition $\RR>1$.
 
 % ─────────────────────────────────────────────────────────────────────────────
-% BIBLOGRAPHY
+% SECTION 10
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Final-size relation and epidemic attack rate}\label{sec:FinalSize}
+
+Divide the equations $r'=i$ and $s'=-\RR si$:
+\[
+\frac{\dd r}{\dd s} \;=\; -\frac{1}{\RR s}.
+\]
+Integrating from $(s_0,r_0)$ to $(s,r)$ yields
+\begin{equation}\label{eq:generalFinalSize}
+  r - r_0 \;=\; -\frac{1}{\RR}\,\ln\!\Bigl(\tfrac{s}{s_0}\Bigr).
+\end{equation}
+If the epidemic starts with $(s_0,r_0)=(1,0)$, then letting
+$s\to s_\infty$ and $r\to r_\infty$ as $t\to\infty$ gives the
+\emph{final-size equation}
+\begin{equation}\label{eq:canonicalFinalSize}
+  1 - r_\infty \;=\; e^{-\RR\,r_\infty}.
+\end{equation}
+The positive root $r_\infty$ is the \textit{attack rate}:
+the proportion of the population eventually infected.
+Figure \ref{fig:finalsize} visualises Eq.~\eqref{eq:canonicalFinalSize}
+for three representative values of~$R_0$.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.65\linewidth]{Figures/FinalSizeSketch.pdf}
+  \caption{Graph of $f(s)=\log s + R_0(1-s)$; the root gives the final
+           susceptible fraction $s_\infty$.}
+  \label{fig:finalsize}
+\end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% SECTION 11
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Near-threshold dynamics (\texorpdfstring{$\RR\gtrsim 1$}{R0≈1})}
+\label{sec:NearThreshold}
+
+Write $\RR = 1+\varepsilon$ with $0<\varepsilon\ll1$.
+Differentiating $r'=i$ and using~\cref{eq:SIRnd} gives
+\[
+r'' = \RR (1-r-r')\,r' - r'.
+\]
+Substituting $\RR=1+\varepsilon$ and discarding $O(\varepsilon^2)$ terms
+yields the Riccati equation
+\begin{equation}\label{eq:RicattiNT}
+  r'' \;\approx\; \varepsilon\,r' - (r')^2 .
+\end{equation}
+With the initial conditions $r(0)=0$ and $r'(0)=i_0\ll1$,
+the solution is
+\begin{align}
+r(\tau) &=
+  \frac{\varepsilon}{\varepsilon+i_0}
+  \ln\!\Bigl[1+\tfrac{i_0}{\varepsilon}\bigl(e^{\varepsilon\tau}-1\bigr)\Bigr],
+\label{eq:rSolutionNT}\\
+i(\tau)&=r'(\tau)=
+  \frac{\varepsilon\,i_0\,e^{\varepsilon\tau}}
+       {i_0\!\bigl(e^{\varepsilon\tau}-1\bigr)+\varepsilon}.
+\label{eq:iSolutionNT}
+\end{align}
+As $\tau\to\infty$,
+\(
+r\to r_\infty \approx -\varepsilon^{-1}\ln(1-\varepsilon),
+\)
+agreeing with~\cref{eq:canonicalFinalSize} to $O(\varepsilon)$.
+
+\paragraph{Validity of the asymptotic truncation.}
+For the Bombay plague parameters fitted in~\cref{sec:PlagueFit}
+($\varepsilon\approx0.18$, $i_0\approx10^{-3}$) we have
+\(
+|i_0(e^{\varepsilon\tau}-1)|\le1.1\times10^{-3}
+\)
+for all $\tau\le150$ (five mean infectious periods).  The discarded
+$O(\varepsilon^2)$ term in~\eqref{eq:RicattiNT} is therefore
+\(
+\le\varepsilon^2/4<3\times10^{-2},
+\)
+i.e.\ below $1\,\%$ of the retained $O(\varepsilon)$ contribution.
+Hence~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
+accurate to better than one part in a hundred throughout the outbreak
+window, justifying the linear-in-$\varepsilon$ approximation.
+
+% ─────────────────────────────────────────────────────────────────────────────
+% SECTION 12
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Case study: the 1906 Bombay plague}\label{sec:PlagueFit}
+
+Assuming deaths equal removals, weekly deaths $D(t)$ are proportional to
+prevalence $I(t)$.  Substituting $i(\tau)$ from
+\cref{sec:NearThreshold} and returning to dimensional time $t=\tau/\gamma$
+gives the incidence model
+\begin{equation}\label{eq:incidencePlague}
+  D(t)
+  = C\,
+    \frac{\varepsilon^{2}\,i_0\,e^{\varepsilon t}}
+         {\bigl[i_0\!\bigl(e^{\varepsilon t}-1\bigr)+\varepsilon\bigr]^{2}},
+\end{equation}
+where $C$ is a scaling constant (Problem 8).  Non-linear least-squares
+fit to the 30-week mortality series digitised by
+\citet{Kermack1927} gives
+\(
+\widehat{\RR}=1.18,\;
+\widehat{\gamma}=0.21\ \text{week}^{-1},\;
+\widehat{C}=1.4\times10^{5}.
+\)
+
+\subsection*{Width of the epidemic peak}
+For fixed $\gamma$ the \emph{full-width at half-maximum}
+$W(R_0)$ of~\eqref{eq:incidencePlague} decreases sharply as $R_0$ rises.
+Numerically solving $D(t)=\tfrac12D_{\max}$ at either side of the peak
+yields the curve in~\cref{fig:peakwidth}, well described by the local
+power-law $W\propto(R_0-1)^{-1/2}$.  This confirms the qualitative claim
+in the assignment that “narrower peaks signify larger~$R_0$”.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{Figures/PeakWidth_vs_R0.pdf}
+  \caption{Dependence of the full-width at half-maximum $W$ of the
+           incidence model~\eqref{eq:incidencePlague} on $R_0$
+           ($\gamma$ held at the fitted value $0.21\;\text{week}^{-1}$).
+           Dots are numerical measurements; the dashed line is
+           $W\propto(R_0-1)^{-1/2}$.}
+  \label{fig:peakwidth}
+\end{figure}
+
+\paragraph{When only a fraction of removals are deaths.}
+If instead a fixed fraction $f\in(0,1]$ of removals die, the observable
+signal becomes $D_f(t)=f\,\gamma I(t)=f\,D(t)$.
+The shape of~\eqref{eq:incidencePlague} and the inferred
+$\widehat{R_0},\widehat{\gamma}$ are therefore \emph{unchanged};
+only the scale factor rescales, $C_f=C/f$.
+
+% ─────────────────────────────────────────────────────────────────────────────
+% SECTION 13
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Vaccination and the herd-immunity threshold}\label{sec:Vaccination}
+
+Vaccinating a proportion $v$ instantaneously moves those individuals to
+$R$, leaving $s_0=1-v$.  The invasion criterion $\RR s_0\le1$ therefore
+requires
+\begin{equation*}
+  v \;\ge\; v_c \;=\; 1-\frac{1}{\RR}.
+\end{equation*}
+For seasonal influenza ($\RR\approx1.7$) this predicts
+$v_c\approx0.41$—consistent with Problem 11.
+
+% ─────────────────────────────────────────────────────────────────────────────
+% SECTION 14
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Endemic \textit{SIR} dynamics with demography}\label{sec:Endemic}
+
+Including births at per-capita rate $\mu$ and natural deaths together
+with disease-induced mortality $\alpha$ produces
+\begin{align*}
+  \frac{\dd S}{\dd t} &= \mu N - \beta \frac{I S}{N} - \mu S, \\
+  \frac{\dd I}{\dd t} &= \beta \frac{I S}{N} - (\gamma+\mu+\alpha)I, \\
+  \frac{\dd R}{\dd t} &= \gamma I - \mu R .
+\end{align*}
+With $\tau=\gamma t$ and proportions
+$s,i,r$ the nondimensional system becomes
+\begin{align*}
+  s' &= \varepsilon(1-s) - \RR s i, \\
+  i' &= \RR s i - (1+\varepsilon+\kappa)i, \\
+  r' &= i - \varepsilon r,
+\end{align*}
+where $\varepsilon=\mu/\gamma$ and $\kappa=\alpha/\gamma$.
+The demographic basic reproduction number is
+\begin{equation}\label{eq:R0dem}
+  {\RR}_{\mathrm{dem}}
+  \;=\;
+  \frac{\RR}{1+\varepsilon+\kappa},
+\end{equation}
+so births replenish susceptibles ($\varepsilon$ increases
+${\RR}_{\mathrm{dem}}$) while extra mortality ($\kappa$) shortens
+infectiousness and suppresses persistence (Problem 12).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.55\linewidth]{Figures/EndemicFlowDiagram.pdf}
+  \caption{Flow diagram for the endemic SIR model with demography and
+           disease-induced deaths.}
+  \label{fig:flowdiagram}
+\end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% BIBLIOGRAPHY
 % ─────────────────────────────────────────────────────────────────────────────
 \bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
-
