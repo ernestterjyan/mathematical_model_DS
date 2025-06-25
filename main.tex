@@ -74,7 +74,7 @@ This model will be built upon the following base structure: we assume there is a
 % SUBSECTION 3.1
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection*{Differential Equations }
-For now, let us assume that once a person is infectious, they remain infectious indefinitely.To best understand this model, differential equations that show the rate of change of each type of population are necessary. First, we find the the equation for $\frac{dI}{dt}$, in other words, the amount of people infected per unit time. Erroneously, one might believe the number of people infected per unit time is $I\beta$, however this counts the amount of people who receive the disease but doesn't factor in the fact that not every contacted person is susceptible. To account for this, let us consider the probability that a random person is susceptible: $S/N$. So finally we can express $\frac{dI}{dt}=\beta I S/N$ . Now as for the rate of change of the susceptible population, for every person infected per unit of time, one less person is susceptible. More specifically, the rates of change are negatively directly proportional. Meaning $\frac{dS}{dt}=-\beta I S/N$. In conclusion:
+For now, let us assume that once a person is infectious, they remain infectious indefinitely. To best understand this model, differential equations that show the rate of change of each type of population are necessary. First, we find the the equation for $\frac{dI}{dt}$, in other words, the amount of people infected per unit time. Erroneously, one might believe the number of people infected per unit time is $I\beta$, however this counts the amount of people who receive the disease but doesn't factor in the fact that not every contacted person is susceptible. To account for this, let us consider the probability that a random person is susceptible: $S/N$. So finally we can express $\frac{dI}{dt}=\beta I S/N$ . Now as for the rate of change of the susceptible population, for every person infected per unit of time, one less person is susceptible. More specifically, the rates of change are negatively directly proportional. Meaning $\frac{dS}{dt}=-\beta I S/N$. In conclusion:
 
 \begin{subequations}\label{eq:SIeqs}
 \begin{align}
@@ -152,7 +152,7 @@ an \emph{exponential distribution} with mean
 \(\Pr\{T>t+s\mid T>t\}=e^{-\gamma s}\) exactly matches the model’s assumption
 that the instantaneous recovery rate is independent of how long the host has
 already been infectious. 
-Because the waiting time to recovery is exponentially distributed, the \emph{mean infectious period} is $1/\gamma$.
+Since the waiting time for recovery is exponentially distributed, the \emph{mean infectious period} is $1/\gamma$.
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 5
 % ─────────────────────────────────────────────────────────────────────────────
@@ -361,24 +361,132 @@ Arrows show the vector field; dashed curves are trajectories
 from the initial condition $(s_0,i_0)=(0.999,0.001)$.}
 \label{fig:phaseplane}
 \end{figure}
+% % ─────────────────────────────────────────────────────────────────────────────
+% % SECTION 9
+% % ─────────────────────────────────────────────────────────────────────────────
+% \section{Disease-free equilibria and the invasion criterion}\label{sec:DFE}
+
+% For the nondimensional \textit{SIR} model in~\cref{eq:SIRnd},
+% \[
+% s'=-\RR si, \qquad
+% i'=\RR si-i, \qquad
+% r'=i ,
+% \]
+% every point with $i=0$ is \emph{disease-free}.  Let
+% \(
+% (s_0,0,r_0)\in[0,1]^3
+% \)
+% be such an equilibrium and perturb it with a single infectious
+% individual so that $i\ll1$ while $s\approx s_0$ remains constant on that
+% time-scale.  Linearising $i'=(\RR s-1)i$ about $i=0$ gives
+% \begin{equation*}
+%   i' \;=\; (\RR s_0 - 1)\,i .
+% \end{equation*}
+% Hence the perturbation grows if and only if
+% \begin{equation*}
+%   \RR\,s_0 \;>\; 1 .
+% \end{equation*}
+% For a wholly susceptible population ($s_0=1$) this reduces to the classical
+% threshold condition $\RR>1$.
+
+% % ─────────────────────────────────────────────────────────────────────────────
+% % SECTION 10
+% % ─────────────────────────────────────────────────────────────────────────────
+% \section{Final-size relation and epidemic attack rate}\label{sec:FinalSize}
+
+% Divide the equations $r'=i$ and $s'=-\RR si$:
+% \[
+% \frac{\dd r}{\dd s} \;=\; -\frac{1}{\RR s}.
+% \]
+% Integrating from $(s_0,r_0)$ to $(s,r)$ yields
+% \begin{equation}\label{eq:generalFinalSize}
+%   r - r_0 \;=\; -\frac{1}{\RR}\,\ln\!\Bigl(\tfrac{s}{s_0}\Bigr).
+% \end{equation}
+% If the epidemic starts with $(s_0,r_0)=(1,0)$, then letting
+% $s\to s_\infty$ and $r\to r_\infty$ as $t\to\infty$ gives the
+% \emph{final-size equation}
+% \begin{equation}\label{eq:canonicalFinalSize}
+%   1 - r_\infty \;=\; e^{-\RR\,r_\infty}.
+% \end{equation}
+% The positive root $r_\infty$ is the \textit{attack rate}:
+% the proportion of the population eventually infected.
+% Figure \ref{fig:finalsize} visualises Eq.~\eqref{eq:canonicalFinalSize}
+% for three representative values of~$R_0$.
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=.65\linewidth]{Figures/FinalSizeSketch.pdf}
+%   \caption{Graph of $f(s)=\log s + R_0(1-s)$; the root gives the final
+%            susceptible fraction $s_\infty$.}
+%   \label{fig:finalsize}
+% \end{figure}
+
+% % ─────────────────────────────────────────────────────────────────────────────
+% % SECTION 11
+% % ─────────────────────────────────────────────────────────────────────────────
+% \section{Near-threshold dynamics (\texorpdfstring{$\RR\gtrsim 1$}{R0≈1})}
+% \label{sec:NearThreshold}
+
+% Write $\RR = 1+\varepsilon$ with $0<\varepsilon\ll1$.
+% Differentiating $r'=i$ and using~\cref{eq:SIRnd} gives
+% \[
+% r'' = \RR (1-r-r')\,r' - r'.
+% \]
+% Substituting $\RR=1+\varepsilon$ and discarding $O(\varepsilon^2)$ terms
+% yields the Riccati equation
+% \begin{equation}\label{eq:RicattiNT}
+%   r'' \;\approx\; \varepsilon\,r' - (r')^2 .
+% \end{equation}
+% With the initial conditions $r(0)=0$ and $r'(0)=i_0\ll1$,
+% the solution is
+% \begin{align}
+% r(\tau) &=
+%   \frac{\varepsilon}{\varepsilon+i_0}
+%   \ln\!\Bigl[1+\tfrac{i_0}{\varepsilon}\bigl(e^{\varepsilon\tau}-1\bigr)\Bigr],
+% \label{eq:rSolutionNT}\\
+% i(\tau)&=r'(\tau)=
+%   \frac{\varepsilon\,i_0\,e^{\varepsilon\tau}}
+%        {i_0\!\bigl(e^{\varepsilon\tau}-1\bigr)+\varepsilon}.
+% \label{eq:iSolutionNT}
+% \end{align}
+% As $\tau\to\infty$,
+% \(
+% r\to r_\infty \approx -\varepsilon^{-1}\ln(1-\varepsilon),
+% \)
+% agreeing with~\cref{eq:canonicalFinalSize} to $O(\varepsilon)$.
+
+% \paragraph{Validity of the asymptotic truncation.}
+% For the Bombay plague parameters fitted in~\cref{sec:PlagueFit}
+% ($\varepsilon\approx0.18$, $i_0\approx10^{-3}$) we have
+% \(
+% |i_0(e^{\varepsilon\tau}-1)|\le1.1\times10^{-3}
+% \)
+% for all $\tau\le150$ (five mean infectious periods).  The discarded
+% $O(\varepsilon^2)$ term in~\eqref{eq:RicattiNT} is therefore
+% \(
+% \le\varepsilon^2/4<3\times10^{-2},
+% \)
+% i.e.\ below $1\,\%$ of the retained $O(\varepsilon)$ contribution.
+% Hence~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
+% accurate to better than one part in a hundred throughout the outbreak
+% window, justifying the linear-in-$\varepsilon$ approximation.
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 9
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Disease-free equilibria and the invasion criterion}\label{sec:DFE}
+\section{Disease-free equilibria and the invasion criterion}
+\label{sec:DFE}
 
 For the nondimensional \textit{SIR} model in~\cref{eq:SIRnd},
 \[
-s'=-\RR si, \qquad
-i'=\RR si-i, \qquad
+s'=-\RR si,\qquad
+i'=\RR si-i,\qquad
 r'=i ,
 \]
 every point with $i=0$ is \emph{disease-free}.  Let
-\(
-(s_0,0,r_0)\in[0,1]^3
-\)
-be such an equilibrium and perturb it with a single infectious
-individual so that $i\ll1$ while $s\approx s_0$ remains constant on that
-time-scale.  Linearising $i'=(\RR s-1)i$ about $i=0$ gives
+\((s_0,0,r_0)\in[0,1]^3\) be such an equilibrium and perturb it with a
+single infectious individual so that $i\ll1$ while $s\approx s_0$ is
+approximately constant on that short time-scale.  Linearising
+$i'=(\RR s-1)i$ about $i=0$ gives
 \begin{equation*}
   i' \;=\; (\RR s_0 - 1)\,i .
 \end{equation*}
@@ -386,15 +494,24 @@ Hence the perturbation grows if and only if
 \begin{equation*}
   \RR\,s_0 \;>\; 1 .
 \end{equation*}
-For a wholly susceptible population ($s_0=1$) this reduces to the classical
-threshold condition $\RR>1$.
-
+For a wholly susceptible population ($s_0=1$) this reduces to the
+classical threshold condition $\RR>1$.
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 10
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Final-size relation and epidemic attack rate}\label{sec:FinalSize}
+\section{Final-size relation and epidemic attack rate}
+\label{sec:FinalSize}
 
-Divide the equations $r'=i$ and $s'=-\RR si$:
+Because \(s'=-\RR s i<0\), the susceptible proportion \(s(\tau)\)
+is strictly decreasing and bounded below by 0, while
+\(r' = i \ge 0\) so \(r(\tau)\) is non-decreasing and bounded above
+by 1.  By the monotone-convergence theorem both limits
+\(
+s_\infty := \lim_{\tau\to\infty}s(\tau),\;
+r_\infty := \lim_{\tau\to\infty}r(\tau)
+\)
+exist.
+Dividing $r'=i$ and $s'=-\RR si$ gives
 \[
 \frac{\dd r}{\dd s} \;=\; -\frac{1}{\RR s}.
 \]
@@ -408,8 +525,10 @@ $s\to s_\infty$ and $r\to r_\infty$ as $t\to\infty$ gives the
 \begin{equation}\label{eq:canonicalFinalSize}
   1 - r_\infty \;=\; e^{-\RR\,r_\infty}.
 \end{equation}
-The positive root $r_\infty$ is the \textit{attack rate}:
-the proportion of the population eventually infected.
+When \(\RR\le1\) the only solution in $[0,1]$ is \(r_\infty=0\):
+no epidemic occurs.  For \(\RR>1\) a unique positive root exists,
+so a non-zero fraction of the population is eventually infected.
+
 Figure \ref{fig:finalsize} visualises Eq.~\eqref{eq:canonicalFinalSize}
 for three representative values of~$R_0$.
 
@@ -427,17 +546,27 @@ for three representative values of~$R_0$.
 \section{Near-threshold dynamics (\texorpdfstring{$\RR\gtrsim 1$}{R0≈1})}
 \label{sec:NearThreshold}
 
-Write $\RR = 1+\varepsilon$ with $0<\varepsilon\ll1$.
-Differentiating $r'=i$ and using~\cref{eq:SIRnd} gives
-\[
-r'' = \RR (1-r-r')\,r' - r'.
-\]
-Substituting $\RR=1+\varepsilon$ and discarding $O(\varepsilon^2)$ terms
-yields the Riccati equation
-\begin{equation}\label{eq:RicattiNT}
-  r'' \;\approx\; \varepsilon\,r' - (r')^2 .
+Eliminating $s$ and $i$ yields a single first-order equation for
+the immune fraction \(r(\tau)\).  Using
+\(s = 1 - r - i\) and \(i = r'\) we find
+\begin{equation}\label{eq:rFirstOrder}
+  r' \;=\; 1 - e^{-\RR r} - r,
 \end{equation}
-With the initial conditions $r(0)=0$ and $r'(0)=i_0\ll1$,
+which is autonomous and closed.  Differentiating once gives the
+second-order non-linear ordinary differential equation
+\begin{equation}\label{eq:rSecondOrder}
+  r'' \;=\; \RR\,(1 - r - r')\,r' - r'.
+\end{equation}
+Equation~\eqref{eq:rSecondOrder} is of Riccati type
+(see, for example, \citet[§1.2]{Polyanin2002}).  Write
+\(\RR = 1+\varepsilon\) with \(0<\varepsilon\ll1\).
+Substituting and discarding $O(\varepsilon^{2})$ terms
+reduces~\eqref{eq:rSecondOrder} to
+\begin{equation}\label{eq:RicattiNT}
+  r'' \;\approx\; \varepsilon\,r' - (r')^{2},
+\end{equation}
+a Riccati equation with constant coefficients.
+With initial conditions $r(0)=0$ and \(r'(0)=i_0\ll1\),
 the solution is
 \begin{align}
 r(\tau) &=
@@ -446,28 +575,31 @@ r(\tau) &=
 \label{eq:rSolutionNT}\\
 i(\tau)&=r'(\tau)=
   \frac{\varepsilon\,i_0\,e^{\varepsilon\tau}}
-       {i_0\!\bigl(e^{\varepsilon\tau}-1\bigr)+\varepsilon}.
+       {i_0\!\bigl(e^{\varepsilon\tau}-1\bigr)+\varepsilon},
 \label{eq:iSolutionNT}
 \end{align}
-As $\tau\to\infty$,
+so that, as \(\tau\to\infty\),
 \(
 r\to r_\infty \approx -\varepsilon^{-1}\ln(1-\varepsilon),
 \)
 agreeing with~\cref{eq:canonicalFinalSize} to $O(\varepsilon)$.
 
 \paragraph{Validity of the asymptotic truncation.}
-For the Bombay plague parameters fitted in~\cref{sec:PlagueFit}
-($\varepsilon\approx0.18$, $i_0\approx10^{-3}$) we have
+For the Bombay plague parameters
+% ~\cref{sec:PlagueFit}
+(\(\varepsilon\approx0.18,\; i_0\approx10^{-3}\))
+we have
 \(
 |i_0(e^{\varepsilon\tau}-1)|\le1.1\times10^{-3}
 \)
-for all $\tau\le150$ (five mean infectious periods).  The discarded
-$O(\varepsilon^2)$ term in~\eqref{eq:RicattiNT} is therefore
+for $\tau\le150$ (five mean infectious periods).
+The neglected $O(\varepsilon^{2})$ term in
+\eqref{eq:RicattiNT} therefore satisfies
 \(
-\le\varepsilon^2/4<3\times10^{-2},
+\bigl| \varepsilon^{2}/4 \bigr| \,<\, 0.18^{2}/4 \approx 8\times10^{-3},
 \)
-i.e.\ below $1\,\%$ of the retained $O(\varepsilon)$ contribution.
-Hence~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
+i.e.\ below $1\%$ of the retained $O(\varepsilon)$ contribution.
+Thus~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
 accurate to better than one part in a hundred throughout the outbreak
 window, justifying the linear-in-$\varepsilon$ approximation.
 
@@ -533,8 +665,7 @@ requires
   v \;\ge\; v_c \;=\; 1-\frac{1}{\RR}.
 \end{equation*}
 For seasonal influenza ($\RR\approx1.7$) this predicts
-$v_c\approx0.41$—consistent with Problem 11.
-
+$v_c\approx0.41$.
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 14
 % ─────────────────────────────────────────────────────────────────────────────
@@ -563,7 +694,7 @@ The demographic basic reproduction number is
 \end{equation}
 so births replenish susceptibles ($\varepsilon$ increases
 ${\RR}_{\mathrm{dem}}$) while extra mortality ($\kappa$) shortens
-infectiousness and suppresses persistence (Problem 12).
+infectiousness and suppresses persistence.
 
 \begin{figure}[H]
   \centering
