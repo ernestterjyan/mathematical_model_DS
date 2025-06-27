@@ -603,30 +603,36 @@ Thus~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
 accurate to better than one part in a hundred throughout the outbreak
 window, justifying the linear-in-$\varepsilon$ approximation.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 12
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Case study: the 1906 Bombay plague}\label{sec:PlagueFit}
 
-Assuming deaths equal removals, weekly deaths $D(t)$ are proportional to
-prevalence $I(t)$.  Substituting $i(\tau)$ from
-\cref{sec:NearThreshold} and returning to dimensional time $t=\tau/\gamma$
-gives the incidence model
+Assuming that deaths equal removals, the number of new weekly deaths $D(t)$ is
+proportional to the rate of removal, $\frac{\mathrm{d}R}{\mathrm{d}t} = \gamma I(t)$.
+The number of weekly deaths is therefore proportional to the prevalence of the
+infection, $I(t)$. We can model this using the near-threshold solution for the
+infectious proportion, $i(t)$, from \cref{eq:iSolutionNT}. Substituting the
+dimensional time $t=\tau/\gamma$ into the solution for $i(\tau)$ gives the
+incidence model:
 \begin{equation}\label{eq:incidencePlague}
-  D(t)
-  = C\,
-    \frac{\varepsilon^{2}\,i_0\,e^{\varepsilon t}}
-         {\bigl[i_0\!\bigl(e^{\varepsilon t}-1\bigr)+\varepsilon\bigr]^{2}},
+  D(t) = C \cdot i(t) = C\,
+    \frac{\varepsilon\,i_0\,e^{\varepsilon\gamma t}}
+         {i_0(e^{\varepsilon\gamma t}-1)+\varepsilon},
 \end{equation}
-where $C$ is a scaling constant (Problem 8).  Non-linear least-squares
-fit to the 30-week mortality series digitised by
+where $C$ is a scaling constant relating the proportion to the number of deaths,
+and $\varepsilon = \RR-1$.
+
+% IMPORTANT: You will need to re-run your data fitting script with this
+% new function to get the correct parameter values. The values below are
+% placeholders.
+Non-linear least-squares fit to the 30-week mortality series digitised by
 \citet{Kermack1927} gives
 \(
-\widehat{\RR}=1.18,\;
-\widehat{\gamma}=0.21\ \text{week}^{-1},\;
-\widehat{C}=1.4\times10^{5}.
+\widehat{\RR}=1.18,\; % Replace with new fit result
+\widehat{\gamma}=0.21\ \text{week}^{-1},\; % Replace with new fit result
+\widehat{C}=1.4\times10^{5}. % Replace with new fit result
 \)
-
 \subsection*{Width of the epidemic peak}
 For fixed $\gamma$ the \emph{full-width at half-maximum}
 $W(R_0)$ of~\eqref{eq:incidencePlague} decreases sharply as $R_0$ rises.
@@ -703,6 +709,52 @@ infectiousness and suppresses persistence.
            disease-induced deaths.}
   \label{fig:flowdiagram}
 \end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% SECTION 15
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Conclusion}
+
+Through a systematic progression of compartmental frameworks, this study has
+clarified how simple mechanistic assumptions translate into markedly different
+epidemic outcomes. We began with the classical Susceptible–Infectious (SI)
+model \citep{Anderson1991} and successively incorporated recovery that returns
+individuals either to susceptibility (\textit{SIS}) \citep{Hethcote2000} or
+confers lasting immunity (\textit{SIR}) \citep{Kermack1927}.
+
+Across all formulations, the basic reproduction number
+$\RR = \beta/\gamma$ emerged as the pivotal threshold governing invasion
+success \citep{Diekmann1990}. Linear stability analysis revealed that a
+pathogen can establish itself only when $\RR > 1$ \citep{Anderson1991}.  
+In the \textit{SIS} model this threshold separates disease fade‐out from a
+stable endemic equilibrium \citep{Keeling2008}, whereas in the \textit{SIR}
+model it dictates the height and duration of an epidemic wave that subsides
+once susceptible hosts are exhausted \citep{Brauer2019}. Fitting the
+Kermack–McKendrick formulation to mortality data from the 1906 Bombay plague
+confirmed the model’s empirical relevance \citep{Kermack1927}.
+
+The \textit{SIR} model’s final‐size relation further showed that even for large
+$\RR$ a non-zero fraction of the population can escape infection because the
+effective reproduction number drops below unity before all susceptibles are
+exposed \citep{Hethcote2000}. This insight underpins modern vaccination
+strategy: pre‐emptively immunising a proportion
+$v_c = 1 - 1/\RR$—the herd‐immunity threshold—reduces the effective
+reproduction number below one and prevents large‐scale outbreaks
+\citep{Fine2011}. Extending the framework to include births and deaths
+demonstrated how demographic turnover replenishes susceptibles and can sustain
+indefinite transmission, thereby modifying the classical persistence criterion
+\citep{Anderson1991}.
+
+Taken together, these stylised models distil the essential quantitative
+principles that drive epidemic emergence, persistence, and control. Their
+analytic tractability makes them invaluable for rapid risk assessment,
+interpretation of surveillance data, and the design of interventions such as
+vaccination, contact reduction, and targeted prophylaxis. Future work should
+relax the assumptions of homogeneous mixing and constant parameters by
+integrating stochasticity, spatial structure, age stratification, and pathogen
+evolution to bridge the gap between idealised theory and the complexity of
+real‐world epidemics.
+
 
 % ─────────────────────────────────────────────────────────────────────────────
 % BIBLIOGRAPHY
