@@ -112,7 +112,7 @@ Solving for \(I\) and using the initial condition \(I(0) = I_0\) we get
 I(t) = \frac{N}{1+\left (\frac{N}{I_0}-1\right)e^{-\beta t}}
 .\]
 Hence \(I(t)\to N\) and \(S(t)\to 0\) as \(t\to\infty\).
-\textbf{If, however, the outbreak starts with \(I_0 = 0\), the right-hand side of \eqref{eq:SIeqsI} vanishes and the solution stays at the disease-free equilibrium \(I(t)\equiv0,\;S(t)\equiv N\).  An epidemic therefore requires at least one initial infectious individual.}
+If, however, the outbreak starts with \(I_0 = 0\), the right-hand side of \eqref{eq:SIeqsI} vanishes and the solution stays at the disease-free equilibrium \(I(t)\equiv0,\;S(t)\equiv N\).  An epidemic therefore requires at least one initial infectious individual.
 
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 4
@@ -297,7 +297,7 @@ r' &= i,
 \end{subequations}
 with the same basic reproduction number
 \(\RR=\beta/\gamma\).
-Because $r=1-s-i$, the dynamics in the
+Since $r=1-s-i$, the dynamics in the
 \((s,i)\)-plane are governed by the first two equations of~\cref{eq:SIRnd}.
 
 \begin{figure}[H]
@@ -334,9 +334,9 @@ remain in $\mathcal T$ for all $\tau\ge0$.
 Figure~\cref{fig:phaseplane} plots vector fields and sample trajectories
 for two parameter regimes:
 $\RR=0.8<1$ (no epidemic) and $\RR=2.0>1$ (epidemic).
-When $\RR<1$ every trajectory tends directly to the
+When $\RR<1$, every trajectory tends directly to the
 disease-free equilibrium $(s,i)=(1,0)$.
-For $\RR>1$ the trajectory first moves away from that point
+For $\RR>1$, the trajectory first moves away from that point
 as the infection grows; it reaches a peak $i_{\max}$, then
 loops back toward the $i=0$ axis as susceptibles are depleted.
 \emph{Not everyone becomes infected:} the final fraction susceptible
@@ -599,7 +599,7 @@ The neglected $O(\varepsilon^{2})$ term in
 \bigl| \varepsilon^{2}/4 \bigr| \,<\, 0.18^{2}/4 \approx 8\times10^{-3},
 \)
 i.e.\ below $1\%$ of the retained $O(\varepsilon)$ contribution.
-Thus~\eqref{eq:rSolutionNT}–\eqref{eq:iSolutionNT} are pointwise
+Thus,~\eqref{eq:rSolutionNT} and \eqref{eq:iSolutionNT} are pointwise
 accurate to better than one part in a hundred throughout the outbreak
 window, justifying the linear-in-$\varepsilon$ approximation.
 
@@ -713,6 +713,8 @@ infectiousness and suppresses persistence.
 % ─────────────────────────────────────────────────────────────────────────────
 % SECTION 15
 % ─────────────────────────────────────────────────────────────────────────────
+
+\hfill
 \section{Conclusion}
 
 Through a systematic progression of compartmental frameworks, this study has
@@ -759,6 +761,7 @@ real‐world epidemics.
 % ─────────────────────────────────────────────────────────────────────────────
 % BIBLIOGRAPHY
 % ─────────────────────────────────────────────────────────────────────────────
+\newpage
 \bibliographystyle{plainnat}
 \bibliography{references}
 
